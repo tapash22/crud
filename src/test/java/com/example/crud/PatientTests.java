@@ -1,5 +1,6 @@
 package com.example.crud;
 
+import com.example.crud.dto.BloodGroupCountResponseEntity;
 import com.example.crud.model.Patient;
 import com.example.crud.repository.PatientRepository;
 import org.junit.jupiter.api.Test;
@@ -21,11 +22,25 @@ public class PatientTests {
         Patient patient = patientRepository.findByName("Aarav Sharma");
 
 //        List<Patient> patientList = patientRepository.findByBirthDateOrEmail(LocalDate.of(1988, 3, 15), "diya" + ".patel@example.com");
-        List<Patient> patientList = patientRepository.findByBornAfterDate(LocalDate.of(1994, 3, 14));
-        for (Patient p: patientList){
-            System.out.println(p);
+//        List<Patient> patientList = patientRepository.findByBornAfterDate(LocalDate.of(1994, 3, 14));
+//        List<Object[]> bloodGroupCount = patientRepository.countEachBloodGroupType();
+//
+//        List<Patient> patientList = patientRepository.findAllPatients();
+//        for(Object[] obj : bloodGroupCount){
+//            System.out.println(obj[0]+" :"+obj[1]);
+//        }
+//        for (Patient p: patientList){
+//            System.out.println(p);
+//        }
+
+//        int rowsUpdated = patientRepository.updateNameWithId("Tapash",1L);
+//       System.out.println(rowsUpdated);
+
+        List<BloodGroupCountResponseEntity> bloodGroupCount = patientRepository.countEachBloodGroupType();
+
+                for(BloodGroupCountResponseEntity bloodGroupCountResponseEntity : bloodGroupCount){
+            System.out.println(bloodGroupCountResponseEntity);
         }
-//        System.out.println(patient);
 
     }
 
