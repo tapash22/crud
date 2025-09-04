@@ -1,7 +1,10 @@
 package com.example.crud.model;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -9,25 +12,21 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Doctor {
+
+public class Department {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Long id;
+    private Long id;
 
     @Column(nullable = false,length = 100)
     private String name;
 
-    @Column(length = 100)
-    private String specialization;
+    @OneToOne
+    private Doctor headDoctor;
 
-    @Column(nullable = false,unique = true,length = 100)
-    private  String email;
-
-    @ManyToMany(mappedBy = "doctors")
-    private Set<Department> departments = new HashSet<>();
-
+    @ManyToMany
+    private Set<Doctor> doctors = new HashSet<>();
 }
