@@ -3,6 +3,8 @@ package com.example.crud.repository;
 import com.example.crud.dto.BloodGroupCountResponseEntity;
 import com.example.crud.model.Patient;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -34,13 +36,17 @@ public interface PatientRepository extends JpaRepository<Patient,Long> {
     List<BloodGroupCountResponseEntity> countEachBloodGroupType();
 
     // using native query
-    @Query(value = "select * from patient", nativeQuery = true)
-    List<Patient> findAllPatients();
+//    @Query(value = "select * from patient", nativeQuery = true)
+//    List<Patient> findAllPatients();
 
     //update value with Modifying using also Transactional
     @Transactional
     @Modifying
     @Query("UPDATE Patient p SET name= :name where id= :id")
     int updateNameWithId (@Param("name") String name, @Param("id") Long id);
+
+    // using pagination
+    @Query(value = "select * from patient", nativeQuery = true)
+    Page<Patient> findAllPatients(Pageable pageable);
 
 }
