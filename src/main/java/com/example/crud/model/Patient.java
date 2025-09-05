@@ -9,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -47,11 +48,19 @@ public class Patient {
     @Enumerated(EnumType.STRING)
     private BloodGroupType bloodGroup;
 
-    @OneToOne
-    @JoinColumn(name = "insurance_id",nullable = false) // owning side
+    //merge use for update and persist use for first time added
+    @OneToOne(cascade = {CascadeType.ALL},orphanRemoval = true)
+    @JoinColumn(name = "insurance_id",nullable = true) // owning side
     private Insurance insurance; //
 
-    @OneToMany(mappedBy = "patient")
-    private List<Appointment> appointments;
+    //orphanRemoval use for remove child if true
+    @OneToMany(mappedBy = "patient", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+    @ToString.Exclude
+    private List<Appointment> appointments = new ArrayList<>();
+
+    public void setInsurance(Insurance insurance) {
+        this.insurance = insurance;
+    }
+
 
 }

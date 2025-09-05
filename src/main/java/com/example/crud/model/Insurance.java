@@ -1,10 +1,7 @@
 package com.example.crud.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CurrentTimestamp;
 
 import java.time.LocalDate;
@@ -15,6 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Insurance {
 
     @Id
@@ -36,4 +34,9 @@ public class Insurance {
 
     @OneToOne(mappedBy = "insurance")
     private Patient patient; //inverse side
+
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
 }
